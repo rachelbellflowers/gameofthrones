@@ -1,0 +1,39 @@
+---
+title: "Untitled"
+author: "Rachel Bellflowers"
+date: "9/4/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(xml2)
+library(rvest)
+library(data.table)
+```
+
+## R Markdown
+
+```{r}
+link_01 <- "https://www.imdb.com/title/tt0944947/episodes?season=1"
+
+seas_1 <- read_html(link_01) %>%
+  html_nodes(xpath = "//*[(@id = \"episodes_content\")]") %>%
+  html_children()
+
+
+```
+
+```{r}
+movie <- read_html("https://en.wikipedia.org/wiki/The_Lego_Movie")
+cast <- html_nodes(movie, "tr:nth-child(8) .plainlist a")
+html_text(cast)
+html_name(cast)
+html_attrs(cast)
+html_attr(cast, "href")
+
+
+```
+
+

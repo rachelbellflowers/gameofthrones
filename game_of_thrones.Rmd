@@ -3,16 +3,16 @@ title: "Game of Thrones Ratings"
 author: "Rachel Bellflowers"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
-  #html_document:
-  #  df_print: paged
-   # theme: readable
-   # code_folding: hide
-  pdf_document:
-    df_print: kable
+  html_document:
+   df_print: paged
+   theme: readable
+   code_folding: hide
+ # pdf_document:
+  #  df_print: kable
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(fig.align = "center", echo = FALSE, warning = FALSE, message = FALSE) # echo false for pdf
+knitr::opts_chunk$set(fig.align = "center", warning = FALSE, message = FALSE) # echo false for pdf
 library(tidyverse)
 library(xml2)
 library(rvest)
@@ -192,6 +192,22 @@ got$year <- as.numeric(format(got$dates, "%Y"))
 got
 ```
 
+```{r}
+boxplot(got$ratings, main = "Boxplot of Ratings", col = "#529672")
+
+# Less robust against outliers:
+
+#mean(got$ratings) # 8.838356
+
+#sd(got$ratings) # 0.9346167
+
+# More robust against outliers:
+
+#median(got$ratings) # 8.9
+
+#IQR(got$ratings) # 0.7
+```
+
 
 ```{r bar_chart, fig.height = 10, fig.width = 12}
 ggplot(got, aes(factor(episode_num), ratings, fill = seasons)) +
@@ -210,20 +226,6 @@ ggplot(got, aes(factor(year), ratings)) +
 ```
 
 
-```{r echo = FALSE}
-boxplot(got$ratings, main = "Boxplot of Ratings", col = "#529672")
 
-# Less robust against outliers:
-
-#mean(got$ratings) # 8.838356
-
-#sd(got$ratings) # 0.9346167
-
-# More robust against outliers:
-
-#median(got$ratings) # 8.9
-
-#IQR(got$ratings) # 0.7
-```
 
 

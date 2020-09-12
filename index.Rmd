@@ -255,6 +255,6 @@ Project Description
 
 This is a project I did on IMDB ratings of Game of Thrones. 
 
-I web-scraped the data from IMDB using `rvest`, then I created this dashboard using `flexdashboard`, `plotly`, `ggplot2`, and `DT`.
+I web-scraped the data from IMDB using `rvest` and `xml2`, then I created this dashboard using `flexdashboard`, `plotly`, `ggplot2`, `dygraphs`, and `DT`.
 
 To view the full repository and the license for this project, follow this [link](https://github.com/rachelbellflowers/gameofthrones).

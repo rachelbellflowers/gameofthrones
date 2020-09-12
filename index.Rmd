@@ -1,0 +1,252 @@
+---
+title: "Game of Thrones"
+author: "Rachel Bellflowers"
+output: 
+  flexdashboard::flex_dashboard:
+    theme: yeti
+    orientation: rows
+    vertical_layout: scroll
+    source_code: embed
+    social: menu
+---
+
+```{r setup, include = FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(xml2)
+library(rvest)
+library(data.table)
+library(knitr)
+library(dygraphs)
+library(plotly)
+library(DT)
+```
+
+```{r webscrape, include = FALSE}
+link_01 <- "https://www.imdb.com/title/tt0944947/episodes?season=1"
+link_02 <- "https://www.imdb.com/title/tt0944947/episodes?season=2"
+link_03 <- "https://www.imdb.com/title/tt0944947/episodes?season=3"
+link_04 <- "https://www.imdb.com/title/tt0944947/episodes?season=4"
+link_05 <- "https://www.imdb.com/title/tt0944947/episodes?season=5"
+link_06 <- "https://www.imdb.com/title/tt0944947/episodes?season=6"
+link_07 <- "https://www.imdb.com/title/tt0944947/episodes?season=7"
+link_08 <- "https://www.imdb.com/title/tt0944947/episodes?season=8"
+
+# Season 1
+
+seas_1_episodes <- read_html(link_01) %>%
+  html_nodes(xpath = "//*[(@id = \"episodes_content\")]//strong//a") %>%
+  html_text()
+
+seas_1_ratings <- read_html(link_01) %>%
+  html_nodes(xpath = "//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"ipl-rating-star\", \" \" )) and contains(concat( \" \", @class, \" \" ), concat( \" \", \"small\", \" \" ))]//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"ipl-rating-star__rating\", \" \" ))]") %>%
+  html_text()
+
+seas_1_dates <- read_html(link_01) %>%
+  html_nodes(xpath = "//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"airdate\", \" \" ))]") %>%
+  html_text()
+
+# Season 2
+
+seas_2_episodes <- read_html(link_02) %>%
+  html_nodes(xpath = "//*[(@id = \"episodes_content\")]//strong//a") %>%
+  html_text()
+
+seas_2_ratings <- read_html(link_02) %>%
+  html_nodes(xpath = "//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"ipl-rating-star\", \" \" )) and contains(concat( \" \", @class, \" \" ), concat( \" \", \"small\", \" \" ))]//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"ipl-rating-star__rating\", \" \" ))]") %>%
+  html_text()
+
+seas_2_dates <- read_html(link_02) %>%
+  html_nodes(xpath = "//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"airdate\", \" \" ))]") %>%
+  html_text()
+
+
+# Season 3
+
+seas_3_episodes <- read_html(link_03) %>%
+  html_nodes(xpath = "//*[(@id = \"episodes_content\")]//strong//a") %>%
+  html_text()
+
+seas_3_ratings <- read_html(link_03) %>%
+  html_nodes(xpath = "//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"ipl-rating-star\", \" \" )) and contains(concat( \" \", @class, \" \" ), concat( \" \", \"small\", \" \" ))]//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"ipl-rating-star__rating\", \" \" ))]") %>%
+  html_text()
+
+seas_3_dates <- read_html(link_03) %>%
+  html_nodes(xpath = "//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"airdate\", \" \" ))]") %>%
+  html_text()
+
+# Season 4
+
+seas_4_episodes <- read_html(link_04) %>%
+  html_nodes(xpath = "//*[(@id = \"episodes_content\")]//strong//a") %>%
+  html_text()
+
+seas_4_ratings <- read_html(link_04) %>%
+  html_nodes(xpath = "//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"ipl-rating-star\", \" \" )) and contains(concat( \" \", @class, \" \" ), concat( \" \", \"small\", \" \" ))]//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"ipl-rating-star__rating\", \" \" ))]") %>%
+  html_text()
+
+seas_4_dates <- read_html(link_04) %>%
+  html_nodes(xpath = "//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"airdate\", \" \" ))]") %>%
+  html_text()
+
+# Season 5
+
+seas_5_episodes <- read_html(link_05) %>%
+  html_nodes(xpath = "//*[(@id = \"episodes_content\")]//strong//a") %>%
+  html_text()
+
+seas_5_ratings <- read_html(link_05) %>%
+  html_nodes(xpath = "//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"ipl-rating-star\", \" \" )) and contains(concat( \" \", @class, \" \" ), concat( \" \", \"small\", \" \" ))]//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"ipl-rating-star__rating\", \" \" ))]") %>%
+  html_text()
+
+seas_5_dates <- read_html(link_05) %>%
+  html_nodes(xpath = "//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"airdate\", \" \" ))]") %>%
+  html_text()
+
+# Season 6
+
+seas_6_episodes <- read_html(link_06) %>%
+  html_nodes(xpath = "//*[(@id = \"episodes_content\")]//strong//a") %>%
+  html_text()
+
+seas_6_ratings <- read_html(link_06) %>%
+  html_nodes(xpath = "//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"ipl-rating-star\", \" \" )) and contains(concat( \" \", @class, \" \" ), concat( \" \", \"small\", \" \" ))]//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"ipl-rating-star__rating\", \" \" ))]") %>%
+  html_text()
+
+seas_6_dates <- read_html(link_06) %>%
+  html_nodes(xpath = "//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"airdate\", \" \" ))]") %>%
+  html_text()
+
+# Season 7
+
+seas_7_episodes <- read_html(link_07) %>%
+  html_nodes(xpath = "//*[(@id = \"episodes_content\")]//strong//a") %>%
+  html_text()
+
+seas_7_ratings <- read_html(link_07) %>%
+  html_nodes(xpath = "//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"ipl-rating-star\", \" \" )) and contains(concat( \" \", @class, \" \" ), concat( \" \", \"small\", \" \" ))]//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"ipl-rating-star__rating\", \" \" ))]") %>%
+  html_text()
+
+seas_7_dates <- read_html(link_07) %>%
+  html_nodes(xpath = "//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"airdate\", \" \" ))]") %>%
+  html_text()
+
+# Season 8
+
+seas_8_episodes <- read_html(link_08) %>%
+  html_nodes(xpath = "//*[(@id = \"episodes_content\")]//strong//a") %>%
+  html_text()
+
+seas_8_ratings <- read_html(link_08) %>%
+  html_nodes(xpath = "//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"ipl-rating-star\", \" \" )) and contains(concat( \" \", @class, \" \" ), concat( \" \", \"small\", \" \" ))]//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"ipl-rating-star__rating\", \" \" ))]") %>%
+  html_text()
+
+seas_8_dates <- read_html(link_08) %>%
+  html_nodes(xpath = "//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"airdate\", \" \" ))]") %>%
+  html_text()
+```
+
+
+```{r manipulate, include = FALSE}
+# Seasons
+
+hmm <- replicate(n = 10, "Season 1", simplify = TRUE)
+hmm2 <- replicate(n = 10, "Season 2", simplify = TRUE)
+hmm3 <- replicate(n = 10, "Season 3", simplify = TRUE)
+hmm4 <- replicate(n = 10, "Season 4", simplify = TRUE)
+hmm5 <- replicate(n = 10, "Season 5", simplify = TRUE)
+hmm6 <- replicate(n = 10, "Season 6", simplify = TRUE)
+hmm7 <- replicate(n = 7, "Season 7", simplify = TRUE)
+hmm8 <- replicate(n = 6, "Season 8", simplify = TRUE)
+
+# Episode number
+
+hmms <- replicate(n = 6, c(1:10), simplify = TRUE)
+episode_num <- c(hmms, 1:7, 1:6)
+
+# Combine into datatable
+
+dates <- c(seas_1_dates, seas_2_dates, seas_3_dates, seas_4_dates, seas_5_dates, seas_6_dates, seas_7_dates, seas_8_dates)
+
+episodes <- c(seas_1_episodes, seas_2_episodes, seas_3_episodes, seas_4_episodes, seas_5_episodes, seas_6_episodes, seas_7_episodes, seas_8_episodes)
+
+ratings <- c(seas_1_ratings, seas_2_ratings, seas_3_ratings, seas_4_ratings, seas_5_ratings, seas_6_ratings, seas_7_ratings, seas_8_ratings)
+
+seasons <- c(hmm, hmm2, hmm3, hmm4, hmm5, hmm6, hmm7, hmm8)
+
+got <- data.table(seasons, episodes, episode_num, ratings, dates)
+
+got$dates <- str_trim(got$dates)
+
+# Changing data types
+
+got$ratings <- as.numeric(got$ratings)
+
+got$dates <- str_remove_all(got$dates, "\\.")
+got$dates <- as.Date(got$dates, "%d %b %Y")
+got$year <- as.numeric(format(got$dates, "%Y"))
+```
+
+
+Episodes
+=======================================================================
+
+Row
+-----------------------------------------------------------------------
+### Data Table
+
+```{r}
+datatable(got)
+```
+
+Row
+-----------------------------------------------------------------------
+### Episode Ratings by Season
+
+```{r bar_chart}
+bar_chart <- ggplot(got, aes(factor(episode_num), ratings, fill = seasons)) +
+  geom_col() +
+  facet_grid(~seasons) +
+  labs(x = "Episode Number", y = "Rating") +
+  theme_minimal() 
+
+bar_chart_p <- ggplotly(bar_chart)
+
+bar_chart_p <- bar_chart_p %>% layout(showlegend = FALSE)
+
+ggplotly(bar_chart_p)
+#fig.height = 6, fig.width = 12
+```
+
+Seasons
+=======================================================================
+
+Row
+-----------------------------------------------------------------------
+
+### Time Series of Season Ratings
+
+```{r}
+series <- got[ , c(6, 4)]
+
+dygraph(series)
+```
+
+### Boxplot of Ratings
+
+```{r boxplot}
+plot_ly(got, y = ~ratings, type = "box")
+
+# Less robust against outliers:
+
+#mean(got$ratings) # 8.838356
+ 
+#sd(got$ratings) # 0.9346167
+
+# More robust against outliers:
+
+#median(got$ratings) # 8.9
+
+#IQR(got$ratings) # 0.7
+```
+

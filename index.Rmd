@@ -3,6 +3,7 @@ title: "Game of Thrones"
 author: "Rachel Bellflowers"
 output: 
   flexdashboard::flex_dashboard:
+    favicon: favicon.png
     theme: yeti
     orientation: rows
     vertical_layout: scroll
@@ -11,6 +12,7 @@ output:
 ---
 
 ```{r setup, include = FALSE}
+knitr::opts_chunk$set(comment = "")
 library(flexdashboard)
 library(tidyverse)
 library(xml2)
@@ -215,7 +217,6 @@ bar_chart_p <- ggplotly(bar_chart)
 bar_chart_p <- bar_chart_p %>% layout(showlegend = FALSE)
 
 ggplotly(bar_chart_p)
-#fig.height = 6, fig.width = 12
 ```
 
 Seasons
@@ -224,9 +225,14 @@ Seasons
 Row
 -----------------------------------------------------------------------
 
-### Time Series of Season Ratings
+### Time Series of Show Ratings
 
-```{r}
+```{r time}
+# This is a time-series graph with the title: Time Series of Show Ratings. 
+# It shows how ratings for the show changed throughout the years from 2011 to 2018. 
+# Years appears on the x-axis. Ratings out of 10 appear on the y-axis. Tick marks for the y-axis are at 4, 5, 6, 7, 8, 9, and 10. 
+#The values are as follows: 2011 = rating of 9.1; 2012 = rating of 8.8; 2013 = rating of 8.8; 2014 = rating of 9.1; 2015 = rating of 8.5; 2016 = rating of 8.5; 2017 = rating of 8.6; 2018 = rating of 7.5.
+
 series <- got[ , c(6, 4)]
 
 dygraph(series)
